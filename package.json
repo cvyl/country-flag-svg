@@ -4,6 +4,7 @@
   "description": "Lightweight country flag SVG loader",
   "main": "dist/country-flag-svg.umd.js",
   "module": "dist/country-flag-svg.esm.js",
+  "homepage": "https://github.com/cvyl/country-flag-svg#readme",
   "scripts": {
     "build": "rollup -c",
     "prepare": "npm run build",
