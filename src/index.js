@@ -85,6 +85,7 @@ import FR from './flags/1f1eb-1f1f7.svg';
 
 import GA from './flags/1f1ec-1f1e6.svg';
 import GB from './flags/1f1ec-1f1e7.svg';
+import EN from './flags/1f1ec-1f1e7.svg'; // Alias for GB
 import GD from './flags/1f1ec-1f1e9.svg';
 import GE from './flags/1f1ec-1f1ea.svg';
 import GF from './flags/1f1ec-1f1eb.svg';
@@ -352,6 +353,7 @@ const flagMap = {
   'EE': EE,
   'EG': EG,
   'EH': EH,
+  'EN': EN,
   'ER': ER,
   'ES': ES,
   'ET': ET,
