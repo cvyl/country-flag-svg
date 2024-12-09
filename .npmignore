@@ -3,3 +3,4 @@ rollup.conig.js
 node_modules
 example
 src
+src/*
