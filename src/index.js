@@ -1,283 +1,558 @@
-function getFlagEmoji(locale) {
-  // Single flagMap that includes known country codes and their flags
-  const flagMap = {
-    'AC': '1f1e6-1f1e8',
-    'AD': '1f1e6-1f1e9',
-    'AE': '1f1e6-1f1ea',
-    'AF': '1f1e6-1f1eb',
-    'AG': '1f1e6-1f1ec',
-    'AI': '1f1e6-1f1ee',
-    'AL': '1f1e6-1f1f1',
-    'AM': '1f1e6-1f1f2',
-    'AO': '1f1e6-1f1f4',
-    'AQ': '1f1e6-1f1f6',
-    'AR': '1f1e6-1f1f7',
-    'AS': '1f1e6-1f1f8',
-    'AT': '1f1e6-1f1f9',
-    'AU': '1f1e6-1f1fa',
-    'AW': '1f1e6-1f1fc',
-    'AX': '1f1e6-1f1fd',
-    'AZ': '1f1e6-1f1ff',
-    'BA': '1f1e7-1f1e6',
-    'BB': '1f1e7-1f1e7',
-    'BD': '1f1e7-1f1e9',
-    'BE': '1f1e7-1f1ea',
-    'BF': '1f1e7-1f1eb',
-    'BG': '1f1e7-1f1ec',
-    'BH': '1f1e7-1f1ed',
-    'BI': '1f1e7-1f1ee',
-    'BJ': '1f1e7-1f1ef',
-    'BL': '1f1e7-1f1f1',
-    'BM': '1f1e7-1f1f2',
-    'BN': '1f1e7-1f1f3',
-    'BO': '1f1e7-1f1f4',
-    'BQ': '1f1e7-1f1f6',
-    'BR': '1f1e7-1f1f7',
-    'BS': '1f1e7-1f1f8',
-    'BT': '1f1e7-1f1f9',
-    'BV': '1f1e7-1f1fb',
-    'BW': '1f1e7-1f1fc',
-    'BY': '1f1e7-1f1fe',
-    'BZ': '1f1e7-1f1ff',
-    'CA': '1f1e8-1f1e6',
-    'CC': '1f1e8-1f1e8',
-    'CD': '1f1e8-1f1e9',
-    'CF': '1f1e8-1f1eb',
-    'CG': '1f1e8-1f1ec',
-    'CH': '1f1e8-1f1ed',
-    'CI': '1f1e8-1f1ee',
-    'CK': '1f1e8-1f1f0',
-    'CL': '1f1e8-1f1f1',
-    'CM': '1f1e8-1f1f2',
-    'CN': '1f1e8-1f1f3',
-    'CO': '1f1e8-1f1f4',
-    'CP': '1f1e8-1f1f5',
-    'CR': '1f1e8-1f1f7',
-    'CU': '1f1e8-1f1fa',
-    'CV': '1f1e8-1f1fb',
-    'CW': '1f1e8-1f1fc',
-    'CX': '1f1e8-1f1fd',
-    'CY': '1f1e8-1f1fe',
-    'CZ': '1f1e8-1f1ff',
-    'DE': '1f1e9-1f1ea',
-    'DG': '1f1e9-1f1ec',
-    'DJ': '1f1e9-1f1ef',
-    'DK': '1f1e9-1f1f0',
-    'DM': '1f1e9-1f1f2',
-    'DO': '1f1e9-1f1f4',
-    'DZ': '1f1e9-1f1ff',
-    'EA': '1f1ea-1f1e6',
-    'EC': '1f1ea-1f1e8',
-    'EE': '1f1ea-1f1ea',
-    'EG': '1f1ea-1f1ec',
-    'EH': '1f1ea-1f1ed',
-    'ER': '1f1ea-1f1f7',
-    'ES': '1f1ea-1f1f8',
-    'ET': '1f1ea-1f1f9',
-    'EU': '1f1ea-1f1fa',
-    'FI': '1f1eb-1f1ee',
-    'FK': '1f1eb-1f1ef',
-    'FM': '1f1eb-1f1f2',
-    'FO': '1f1eb-1f1f4',
-    'FR': '1f1eb-1f1f7',
-    'GA': '1f1ec-1f1e6',
-    'GB': '1f1ec-1f1e7',
-    'GD': '1f1ec-1f1e9',
-    'GE': '1f1ec-1f1ea',
-    'GF': '1f1ec-1f1eb',
-    'GG': '1f1ec-1f1ec',
-    'GH': '1f1ec-1f1ed',
-    'GI': '1f1ec-1f1ee',
-    'GL': '1f1ec-1f1f1',
-    'GM': '1f1ec-1f1f2',
-    'GN': '1f1ec-1f1f3',
-    'GP': '1f1ec-1f1f5',
-    'GQ': '1f1ec-1f1f6',
-    'GR': '1f1ec-1f1f7',
-    'GS': '1f1ec-1f1f8',
-    'GT': '1f1ec-1f1f9',
-    'GU': '1f1ec-1f1fa',
-    'GW': '1f1ec-1f1fc',
-    'GY': '1f1ec-1f1fe',
-    'HK': '1f1ed-1f1f0',
-    'HM': '1f1ed-1f1f2',
-    'HN': '1f1ed-1f1f3',
-    'HR': '1f1ed-1f1f7',
-    'HT': '1f1ed-1f1f9',
-    'HU': '1f1ed-1f1fa',
-    'IC': '1f1ee-1f1e8',
-    'ID': '1f1ee-1f1e9',
-    'IE': '1f1ee-1f1ea',
-    'IL': '1f1ee-1f1f1',
-    'IM': '1f1ee-1f1f2',
-    'IN': '1f1ee-1f1f3',
-    'IO': '1f1ee-1f1f4',
-    'IQ': '1f1ee-1f1f6',
-    'IR': '1f1ee-1f1f7',
-    'IS': '1f1ee-1f1f8',
-    'IT': '1f1ee-1f1f9',
-    'JE': '1f1ef-1f1ea',
-    'JM': '1f1ef-1f1f2',
-    'JO': '1f1ef-1f1f4',
-    'JP': '1f1ef-1f1f5',
-    'KE': '1f1f0-1f1ea',
-    'KG': '1f1f0-1f1ec',
-    'KH': '1f1f0-1f1ed',
-    'KI': '1f1f0-1f1ee',
-    'KM': '1f1f0-1f1f2',
-    'KN': '1f1f0-1f1f3',
-    'KP': '1f1f0-1f1f5',
-    'KR': '1f1f0-1f1f7',
-    'KW': '1f1f0-1f1fc',
-    'KY': '1f1f0-1f1fe',
-    'KZ': '1f1f0-1f1ff',
-    'LA': '1f1f1-1f1e6',
-    'LB': '1f1f1-1f1e7',
-    'LC': '1f1f1-1f1e8',
-    'LI': '1f1f1-1f1ee',
-    'LK': '1f1f1-1f1f0',
-    'LR': '1f1f1-1f1f7',
-    'LS': '1f1f1-1f1f8',
-    'LT': '1f1f1-1f1f9',
-    'LU': '1f1f1-1f1fa',
-    'LV': '1f1f1-1f1fb',
-    'LY': '1f1f1-1f1fe',
-    'MA': '1f1f2-1f1e6',
-    'MC': '1f1f2-1f1e8',
-    'MD': '1f1f2-1f1e9',
-    'ME': '1f1f2-1f1ea',
-    'MF': '1f1f2-1f1eb',
-    'MG': '1f1f2-1f1ec',
-    'MH': '1f1f2-1f1ed',
-    'MK': '1f1f2-1f1f0',
-    'ML': '1f1f2-1f1f1',
-    'MM': '1f1f2-1f1f2',
-    'MN': '1f1f2-1f1f3',
-    'MO': '1f1f2-1f1f4',
-    'MP': '1f1f2-1f1f5',
-    'MQ': '1f1f2-1f1f6',
-    'MR': '1f1f2-1f1f7',
-    'MS': '1f1f2-1f1f8',
-    'MT': '1f1f2-1f1f9',
-    'MU': '1f1f2-1f1fa',
-    'MV': '1f1f2-1f1fb',
-    'MW': '1f1f2-1f1fc',
-    'MX': '1f1f2-1f1fd',
-    'MY': '1f1f2-1f1fe',
-    'MZ': '1f1f2-1f1ff',
-    'NA': '1f1f3-1f1e6',
-    'NC': '1f1f3-1f1e8',
-    'NE': '1f1f3-1f1ea',
-    'NF': '1f1f3-1f1eb',
-    'NG': '1f1f3-1f1ec',
-    'NI': '1f1f3-1f1ee',
-    'NL': '1f1f3-1f1f1',
-    'NO': '1f1f3-1f1f4',
-    'NP': '1f1f3-1f1f5',
-    'NR': '1f1f3-1f1f7',
-    'NU': '1f1f3-1f1fa',
-    'NZ': '1f1f3-1f1ff',
-    'OM': '1f1f4-1f1f2',
-    'PA': '1f1f5-1f1e6',
-    'PE': '1f1f5-1f1ea',
-    'PF': '1f1f5-1f1eb',
-    'PG': '1f1f5-1f1ec',
-    'PH': '1f1f5-1f1ed',
-    'PK': '1f1f5-1f1f0',
-    'PL': '1f1f5-1f1f1',
-    'PM': '1f1f5-1f1f2',
-    'PN': '1f1f5-1f1f3',
-    'PR': '1f1f5-1f1f7',
-    'PS': '1f1f5-1f1f8',
-    'PT': '1f1f5-1f1f9',
-    'PW': '1f1f5-1f1fc',
-    'PY': '1f1f5-1f1fe',
-    'QA': '1f1f6-1f1e6',
-    'RE': '1f1f7-1f1ea',
-    'RO': '1f1f7-1f1f4',
-    'RS': '1f1f7-1f1f8',
-    'RU': '1f1f7-1f1fa',
-    'RW': '1f1f7-1f1fc',
-    'SA': '1f1f8-1f1e6',
-    'SB': '1f1f8-1f1e7',
-    'SC': '1f1f8-1f1e8',
-    'SD': '1f1f8-1f1e9',
-    'SE': '1f1f8-1f1ea',
-    'SG': '1f1f8-1f1ec',
-    'SH': '1f1f8-1f1ed',
-    'SI': '1f1f8-1f1ee',
-    'SJ': '1f1f8-1f1ef',
-    'SK': '1f1f8-1f1f0',
-    'SL': '1f1f8-1f1f1',
-    'SM': '1f1f8-1f1f2',
-    'SN': '1f1f8-1f1f3',
-    'SO': '1f1f8-1f1f4',
-    'SR': '1f1f8-1f1f7',
-    'SS': '1f1f8-1f1f8',
-    'ST': '1f1f8-1f1f9',
-    'SV': '1f1f8-1f1fb',
-    'SX': '1f1f8-1f1fd',
-    'SY': '1f1f8-1f1fe',
-    'SZ': '1f1f8-1f1ff',
-    'TA': '1f1f9-1f1e6',
-    'TC': '1f1f9-1f1e8',
-    'TD': '1f1f9-1f1e9',
-    'TF': '1f1f9-1f1eb',
-    'TG': '1f1f9-1f1ec',
-    'TH': '1f1f9-1f1ed',
-    'TJ': '1f1f9-1f1ef',
-    'TK': '1f1f9-1f1f0',
-    'TL': '1f1f9-1f1f1',
-    'TM': '1f1f9-1f1f2',
-    'TN': '1f1f9-1f1f3',
-    'TO': '1f1f9-1f1f4',
-    'TR': '1f1f9-1f1f7',
-    'TT': '1f1f9-1f1f9',
-    'TV': '1f1f9-1f1fb',
-    'TW': '1f1f9-1f1fc',
-    'TZ': '1f1f9-1f1ff',
-    'UA': '1f1fa-1f1e6',
-    'UG': '1f1fa-1f1ec',
-    'UM': '1f1fa-1f1f2',
-    'UN': '1f1fa-1f1f3',
-    'US': '1f1fa-1f1f8',
-    'UY': '1f1fa-1f1fe',
-    'UZ': '1f1fa-1f1ff',
-    'VA': '1f1fb-1f1e6',
-    'VC': '1f1fb-1f1e8',
-    'VE': '1f1fb-1f1ea',
-    'VG': '1f1fb-1f1ec',
-    'VI': '1f1fb-1f1ee',
-    'VN': '1f1fb-1f1f3',
-    'VU': '1f1fb-1f1fa',
-    'WF': '1f1fc-1f1eb',
-    'WS': '1f1fc-1f1f8',
-    'XK': '1f1fd-1f1f0',
-    'YE': '1f1fe-1f1ea',
-    'YT': '1f1fe-1f1f9',
-    'ZA': '1f1ff-1f1e6',
-    'ZM': '1f1ff-1f1f2',
-    'ZW': '1f1ff-1f1fc'
-  };
+import AC from './flags/1f1e6-1f1e8.svg';
+import AD from './flags/1f1e6-1f1e9.svg';
+import AE from './flags/1f1e6-1f1ea.svg';
+import AF from './flags/1f1e6-1f1eb.svg';
+import AG from './flags/1f1e6-1f1ec.svg';
+import AI from './flags/1f1e6-1f1ee.svg';
+import AL from './flags/1f1e6-1f1f1.svg';
+import AM from './flags/1f1e6-1f1f2.svg';
+import AO from './flags/1f1e6-1f1f4.svg';
+import AQ from './flags/1f1e6-1f1f6.svg';
+import AR from './flags/1f1e6-1f1f7.svg';
+import AS from './flags/1f1e6-1f1f8.svg';
+import AT from './flags/1f1e6-1f1f9.svg';
+import AU from './flags/1f1e6-1f1fa.svg';
+import AW from './flags/1f1e6-1f1fc.svg';
+import AX from './flags/1f1e6-1f1fd.svg';
+import AZ from './flags/1f1e6-1f1ff.svg';
 
+import BA from './flags/1f1e7-1f1e6.svg';
+import BB from './flags/1f1e7-1f1e7.svg';
+import BD from './flags/1f1e7-1f1e9.svg';
+import BE from './flags/1f1e7-1f1ea.svg';
+import BF from './flags/1f1e7-1f1eb.svg';
+import BG from './flags/1f1e7-1f1ec.svg';
+import BH from './flags/1f1e7-1f1ed.svg';
+import BI from './flags/1f1e7-1f1ee.svg';
+import BJ from './flags/1f1e7-1f1ef.svg';
+import BL from './flags/1f1e7-1f1f1.svg';
+import BM from './flags/1f1e7-1f1f2.svg';
+import BN from './flags/1f1e7-1f1f3.svg';
+import BO from './flags/1f1e7-1f1f4.svg';
+import BQ from './flags/1f1e7-1f1f6.svg';
+import BR from './flags/1f1e7-1f1f7.svg';
+import BS from './flags/1f1e7-1f1f8.svg';
+import BT from './flags/1f1e7-1f1f9.svg';
+import BV from './flags/1f1e7-1f1fb.svg';
+import BW from './flags/1f1e7-1f1fc.svg';
+import BY from './flags/1f1e7-1f1fe.svg';
+import BZ from './flags/1f1e7-1f1ff.svg';
+
+import CA from './flags/1f1e8-1f1e6.svg';
+import CC from './flags/1f1e8-1f1e8.svg';
+import CD from './flags/1f1e8-1f1e9.svg';
+import CF from './flags/1f1e8-1f1eb.svg';
+import CG from './flags/1f1e8-1f1ec.svg';
+import CH from './flags/1f1e8-1f1ed.svg';
+import CI from './flags/1f1e8-1f1ee.svg';
+import CK from './flags/1f1e8-1f1f0.svg';
+import CL from './flags/1f1e8-1f1f1.svg';
+import CM from './flags/1f1e8-1f1f2.svg';
+import CN from './flags/1f1e8-1f1f3.svg';
+import CO from './flags/1f1e8-1f1f4.svg';
+import CP from './flags/1f1e8-1f1f5.svg';
+import CR from './flags/1f1e8-1f1f7.svg';
+import CU from './flags/1f1e8-1f1fa.svg';
+import CV from './flags/1f1e8-1f1fb.svg';
+import CW from './flags/1f1e8-1f1fc.svg';
+import CX from './flags/1f1e8-1f1fd.svg';
+import CY from './flags/1f1e8-1f1fe.svg';
+import CZ from './flags/1f1e8-1f1ff.svg';
+
+import DE from './flags/1f1e9-1f1ea.svg';
+import DG from './flags/1f1e9-1f1ec.svg';
+import DJ from './flags/1f1e9-1f1ef.svg';
+import DK from './flags/1f1e9-1f1f0.svg';
+import DM from './flags/1f1e9-1f1f2.svg';
+import DO from './flags/1f1e9-1f1f4.svg';
+import DZ from './flags/1f1e9-1f1ff.svg';
+
+import EA from './flags/1f1ea-1f1e6.svg';
+import EC from './flags/1f1ea-1f1e8.svg';
+import EE from './flags/1f1ea-1f1ea.svg';
+import EG from './flags/1f1ea-1f1ec.svg';
+import EH from './flags/1f1ea-1f1ed.svg';
+import ER from './flags/1f1ea-1f1f7.svg';
+import ES from './flags/1f1ea-1f1f8.svg';
+import ET from './flags/1f1ea-1f1f9.svg';
+import EU from './flags/1f1ea-1f1fa.svg';
+
+import FI from './flags/1f1eb-1f1ee.svg';
+import FK from './flags/1f1eb-1f1ef.svg';
+import FM from './flags/1f1eb-1f1f2.svg';
+import FO from './flags/1f1eb-1f1f4.svg';
+import FR from './flags/1f1eb-1f1f7.svg';
+
+import GA from './flags/1f1ec-1f1e6.svg';
+import GB from './flags/1f1ec-1f1e7.svg';
+import GD from './flags/1f1ec-1f1e9.svg';
+import GE from './flags/1f1ec-1f1ea.svg';
+import GF from './flags/1f1ec-1f1eb.svg';
+import GG from './flags/1f1ec-1f1ec.svg';
+import GH from './flags/1f1ec-1f1ed.svg';
+import GI from './flags/1f1ec-1f1ee.svg';
+import GL from './flags/1f1ec-1f1f1.svg';
+import GM from './flags/1f1ec-1f1f2.svg';
+import GN from './flags/1f1ec-1f1f3.svg';
+import GP from './flags/1f1ec-1f1f5.svg';
+import GQ from './flags/1f1ec-1f1f6.svg';
+import GR from './flags/1f1ec-1f1f7.svg';
+import GS from './flags/1f1ec-1f1f8.svg';
+import GT from './flags/1f1ec-1f1f9.svg';
+import GU from './flags/1f1ec-1f1fa.svg';
+import GW from './flags/1f1ec-1f1fc.svg';
+import GY from './flags/1f1ec-1f1fe.svg';
+
+import HK from './flags/1f1ed-1f1f0.svg';
+import HM from './flags/1f1ed-1f1f2.svg';
+import HN from './flags/1f1ed-1f1f3.svg';
+import HR from './flags/1f1ed-1f1f7.svg';
+import HT from './flags/1f1ed-1f1f9.svg';
+import HU from './flags/1f1ed-1f1fa.svg';
+
+import IC from './flags/1f1ee-1f1e8.svg';
+import ID from './flags/1f1ee-1f1e9.svg';
+import IE from './flags/1f1ee-1f1ea.svg';
+import IL from './flags/1f1ee-1f1f1.svg';
+import IM from './flags/1f1ee-1f1f2.svg';
+import IN from './flags/1f1ee-1f1f3.svg';
+import IO from './flags/1f1ee-1f1f4.svg';
+import IQ from './flags/1f1ee-1f1f6.svg';
+import IR from './flags/1f1ee-1f1f7.svg';
+import IS from './flags/1f1ee-1f1f8.svg';
+import IT from './flags/1f1ee-1f1f9.svg';
+
+import JE from './flags/1f1ef-1f1ea.svg';
+import JM from './flags/1f1ef-1f1f2.svg';
+import JO from './flags/1f1ef-1f1f4.svg';
+import JP from './flags/1f1ef-1f1f5.svg';
+
+import KE from './flags/1f1f0-1f1ea.svg';
+import KG from './flags/1f1f0-1f1ec.svg';
+import KH from './flags/1f1f0-1f1ed.svg';
+import KI from './flags/1f1f0-1f1ee.svg';
+import KM from './flags/1f1f0-1f1f2.svg';
+import KN from './flags/1f1f0-1f1f3.svg';
+import KP from './flags/1f1f0-1f1f5.svg';
+import KR from './flags/1f1f0-1f1f7.svg';
+import KW from './flags/1f1f0-1f1fc.svg';
+import KY from './flags/1f1f0-1f1fe.svg';
+import KZ from './flags/1f1f0-1f1ff.svg';
+
+import LA from './flags/1f1f1-1f1e6.svg';
+import LB from './flags/1f1f1-1f1e7.svg';
+import LC from './flags/1f1f1-1f1e8.svg';
+import LI from './flags/1f1f1-1f1ee.svg';
+import LK from './flags/1f1f1-1f1f0.svg';
+import LR from './flags/1f1f1-1f1f7.svg';
+import LS from './flags/1f1f1-1f1f8.svg';
+import LT from './flags/1f1f1-1f1f9.svg';
+import LU from './flags/1f1f1-1f1fa.svg';
+import LV from './flags/1f1f1-1f1fb.svg';
+import LY from './flags/1f1f1-1f1fe.svg';
+
+import MA from './flags/1f1f2-1f1e6.svg';
+import MC from './flags/1f1f2-1f1e8.svg';
+import MD from './flags/1f1f2-1f1e9.svg';
+import ME from './flags/1f1f2-1f1ea.svg';
+import MF from './flags/1f1f2-1f1eb.svg';
+import MG from './flags/1f1f2-1f1ec.svg';
+import MH from './flags/1f1f2-1f1ed.svg';
+import MK from './flags/1f1f2-1f1f0.svg';
+import ML from './flags/1f1f2-1f1f1.svg';
+import MM from './flags/1f1f2-1f1f2.svg';
+import MN from './flags/1f1f2-1f1f3.svg';
+import MO from './flags/1f1f2-1f1f4.svg';
+import MP from './flags/1f1f2-1f1f5.svg';
+import MQ from './flags/1f1f2-1f1f6.svg';
+import MR from './flags/1f1f2-1f1f7.svg';
+import MS from './flags/1f1f2-1f1f8.svg';
+import MT from './flags/1f1f2-1f1f9.svg';
+import MU from './flags/1f1f2-1f1fa.svg';
+import MV from './flags/1f1f2-1f1fb.svg';
+import MW from './flags/1f1f2-1f1fc.svg';
+import MX from './flags/1f1f2-1f1fd.svg';
+import MY from './flags/1f1f2-1f1fe.svg';
+import MZ from './flags/1f1f2-1f1ff.svg';
+
+import NA from './flags/1f1f3-1f1e6.svg';
+import NC from './flags/1f1f3-1f1e8.svg';
+import NE from './flags/1f1f3-1f1ea.svg';
+import NF from './flags/1f1f3-1f1eb.svg';
+import NG from './flags/1f1f3-1f1ec.svg';
+import NI from './flags/1f1f3-1f1ee.svg';
+import NL from './flags/1f1f3-1f1f1.svg';
+import NO from './flags/1f1f3-1f1f4.svg';
+import NP from './flags/1f1f3-1f1f5.svg';
+import NR from './flags/1f1f3-1f1f7.svg';
+import NU from './flags/1f1f3-1f1fa.svg';
+import NZ from './flags/1f1f3-1f1ff.svg';
+
+import OM from './flags/1f1f4-1f1f2.svg';
+
+import PA from './flags/1f1f5-1f1e6.svg';
+import PE from './flags/1f1f5-1f1ea.svg';
+import PF from './flags/1f1f5-1f1eb.svg';
+import PG from './flags/1f1f5-1f1ec.svg';
+import PH from './flags/1f1f5-1f1ed.svg';
+import PK from './flags/1f1f5-1f1f0.svg';
+import PL from './flags/1f1f5-1f1f1.svg';
+import PM from './flags/1f1f5-1f1f2.svg';
+import PN from './flags/1f1f5-1f1f3.svg';
+import PR from './flags/1f1f5-1f1f7.svg';
+import PS from './flags/1f1f5-1f1f8.svg';
+import PT from './flags/1f1f5-1f1f9.svg';
+import PW from './flags/1f1f5-1f1fc.svg';
+import PY from './flags/1f1f5-1f1fe.svg';
+
+import QA from './flags/1f1f6-1f1e6.svg';
+
+import RE from './flags/1f1f7-1f1ea.svg';
+import RO from './flags/1f1f7-1f1f4.svg';
+import RS from './flags/1f1f7-1f1f8.svg';
+import RU from './flags/1f1f7-1f1fa.svg';
+import RW from './flags/1f1f7-1f1fc.svg';
+
+import SA from './flags/1f1f8-1f1e6.svg';
+import SB from './flags/1f1f8-1f1e7.svg';
+import SC from './flags/1f1f8-1f1e8.svg';
+import SD from './flags/1f1f8-1f1e9.svg';
+import SE from './flags/1f1f8-1f1ea.svg';
+import SG from './flags/1f1f8-1f1ec.svg';
+import SH from './flags/1f1f8-1f1ed.svg';
+import SI from './flags/1f1f8-1f1ee.svg';
+import SJ from './flags/1f1f8-1f1ef.svg';
+import SK from './flags/1f1f8-1f1f0.svg';
+import SL from './flags/1f1f8-1f1f1.svg';
+import SM from './flags/1f1f8-1f1f2.svg';
+import SN from './flags/1f1f8-1f1f3.svg';
+import SO from './flags/1f1f8-1f1f4.svg';
+import SR from './flags/1f1f8-1f1f7.svg';
+import SS from './flags/1f1f8-1f1f8.svg';
+import ST from './flags/1f1f8-1f1f9.svg';
+import SV from './flags/1f1f8-1f1fb.svg';
+import SX from './flags/1f1f8-1f1fd.svg';
+import SY from './flags/1f1f8-1f1fe.svg';
+import SZ from './flags/1f1f8-1f1ff.svg';
+
+import TA from './flags/1f1f9-1f1e6.svg';
+import TC from './flags/1f1f9-1f1e8.svg';
+import TD from './flags/1f1f9-1f1e9.svg';
+import TF from './flags/1f1f9-1f1eb.svg';
+import TG from './flags/1f1f9-1f1ec.svg';
+import TH from './flags/1f1f9-1f1ed.svg';
+import TJ from './flags/1f1f9-1f1ef.svg';
+import TK from './flags/1f1f9-1f1f0.svg';
+import TL from './flags/1f1f9-1f1f1.svg';
+import TM from './flags/1f1f9-1f1f2.svg';
+import TN from './flags/1f1f9-1f1f3.svg';
+import TO from './flags/1f1f9-1f1f4.svg';
+import TR from './flags/1f1f9-1f1f7.svg';
+import TT from './flags/1f1f9-1f1f9.svg';
+import TV from './flags/1f1f9-1f1fb.svg';
+import TW from './flags/1f1f9-1f1fc.svg';
+import TZ from './flags/1f1f9-1f1ff.svg';
+
+import UA from './flags/1f1fa-1f1e6.svg';
+import UG from './flags/1f1fa-1f1ec.svg';
+import UM from './flags/1f1fa-1f1f2.svg';
+import UN from './flags/1f1fa-1f1f3.svg';
+import US from './flags/1f1fa-1f1f8.svg';
+import UY from './flags/1f1fa-1f1fe.svg';
+import UZ from './flags/1f1fa-1f1ff.svg';
+
+import VA from './flags/1f1fb-1f1e6.svg';
+import VC from './flags/1f1fb-1f1e8.svg';
+import VE from './flags/1f1fb-1f1ea.svg';
+import VG from './flags/1f1fb-1f1ec.svg';
+import VI from './flags/1f1fb-1f1ee.svg';
+import VN from './flags/1f1fb-1f1f3.svg';
+import VU from './flags/1f1fb-1f1fa.svg';
+
+import WF from './flags/1f1fc-1f1eb.svg';
+import WS from './flags/1f1fc-1f1f8.svg';
+
+import XK from './flags/1f1fd-1f1f0.svg';
+
+import YE from './flags/1f1fe-1f1ea.svg';
+import YT from './flags/1f1fe-1f1f9.svg';
+
+import ZA from './flags/1f1ff-1f1e6.svg';
+import ZM from './flags/1f1ff-1f1f2.svg';
+import ZW from './flags/1f1ff-1f1fc.svg';
+
+const flagMap = {
+  'AC': AC,
+  'AD': AD,
+  'AE': AE,
+  'AF': AF,
+  'AG': AG,
+  'AI': AI,
+  'AL': AL,
+  'AM': AM,
+  'AO': AO,
+  'AQ': AQ,
+  'AR': AR,
+  'AS': AS,
+  'AT': AT,
+  'AU': AU,
+  'AW': AW,
+  'AX': AX,
+  'AZ': AZ,
+  'BA': BA,
+  'BB': BB,
+  'BD': BD,
+  'BE': BE,
+  'BF': BF,
+  'BG': BG,
+  'BH': BH,
+  'BI': BI,
+  'BJ': BJ,
+  'BL': BL,
+  'BM': BM,
+  'BN': BN,
+  'BO': BO,
+  'BQ': BQ,
+  'BR': BR,
+  'BS': BS,
+  'BT': BT,
+  'BV': BV,
+  'BW': BW,
+  'BY': BY,
+  'BZ': BZ,
+  'CA': CA,
+  'CC': CC,
+  'CD': CD,
+  'CF': CF,
+  'CG': CG,
+  'CH': CH,
+  'CI': CI,
+  'CK': CK,
+  'CL': CL,
+  'CM': CM,
+  'CN': CN,
+  'CO': CO,
+  'CP': CP,
+  'CR': CR,
+  'CU': CU,
+  'CV': CV,
+  'CW': CW,
+  'CX': CX,
+  'CY': CY,
+  'CZ': CZ,
+  'DE': DE,
+  'DG': DG,
+  'DJ': DJ,
+  'DK': DK,
+  'DM': DM,
+  'DO': DO,
+  'DZ': DZ,
+  'EA': EA,
+  'EC': EC,
+  'EE': EE,
+  'EG': EG,
+  'EH': EH,
+  'ER': ER,
+  'ES': ES,
+  'ET': ET,
+  'EU': EU,
+  'FI': FI,
+  'FK': FK,
+  'FM': FM,
+  'FO': FO,
+  'FR': FR,
+  'GA': GA,
+  'GB': GB,
+  'GD': GD,
+  'GE': GE,
+  'GF': GF,
+  'GG': GG,
+  'GH': GH,
+  'GI': GI,
+  'GL': GL,
+  'GM': GM,
+  'GN': GN,
+  'GP': GP,
+  'GQ': GQ,
+  'GR': GR,
+  'GS': GS,
+  'GT': GT,
+  'GU': GU,
+  'GW': GW,
+  'GY': GY,
+  'HK': HK,
+  'HM': HM,
+  'HN': HN,
+  'HR': HR,
+  'HT': HT,
+  'HU': HU,
+  'IC': IC,
+  'ID': ID,
+  'IE': IE,
+  'IL': IL,
+  'IM': IM,
+  'IN': IN,
+  'IO': IO,
+  'IQ': IQ,
+  'IR': IR,
+  'IS': IS,
+  'IT': IT,
+  'JE': JE,
+  'JM': JM,
+  'JO': JO,
+  'JP': JP,
+  'KE': KE,
+  'KG': KG,
+  'KH': KH,
+  'KI': KI,
+  'KM': KM,
+  'KN': KN,
+  'KP': KP,
+  'KR': KR,
+  'KW': KW,
+  'KY': KY,
+  'KZ': KZ,
+  'LA': LA,
+  'LB': LB,
+  'LC': LC,
+  'LI': LI,
+  'LK': LK,
+  'LR': LR,
+  'LS': LS,
+  'LT': LT,
+  'LU': LU,
+  'LV': LV,
+  'LY': LY,
+  'MA': MA,
+  'MC': MC,
+  'MD': MD,
+  'ME': ME,
+  'MF': MF,
+  'MG': MG,
+  'MH': MH,
+  'MK': MK,
+  'ML': ML,
+  'MM': MM,
+  'MN': MN,
+  'MO': MO,
+  'MP': MP,
+  'MQ': MQ,
+  'MR': MR,
+  'MS': MS,
+  'MT': MT,
+  'MU': MU,
+  'MV': MV,
+  'MW': MW,
+  'MX': MX,
+  'MY': MY,
+  'MZ': MZ,
+  'NA': NA,
+  'NC': NC,
+  'NE': NE,
+  'NF': NF,
+  'NG': NG,
+  'NI': NI,
+  'NL': NL,
+  'NO': NO,
+  'NP': NP,
+  'NR': NR,
+  'NU': NU,
+  'NZ': NZ,
+  'OM': OM,
+  'PA': PA,
+  'PE': PE,
+  'PF': PF,
+  'PG': PG,
+  'PH': PH,
+  'PK': PK,
+  'PL': PL,
+  'PM': PM,
+  'PN': PN,
+  'PR': PR,
+  'PS': PS,
+  'PT': PT,
+  'PW': PW,
+  'PY': PY,
+  'QA': QA,
+  'RE': RE,
+  'RO': RO,
+  'RS': RS,
+  'RU': RU,
+  'RW': RW,
+  'SA': SA,
+  'SB': SB,
+  'SC': SC,
+  'SD': SD,
+  'SE': SE,
+  'SG': SG,
+  'SH': SH,
+  'SI': SI,
+  'SJ': SJ,
+  'SK': SK,
+  'SL': SL,
+  'SM': SM,
+  'SN': SN,
+  'SO': SO,
+  'SR': SR,
+  'SS': SS,
+  'ST': ST,
+  'SV': SV,
+  'SX': SX,
+  'SY': SY,
+  'SZ': SZ,
+  'TA': TA,
+  'TC': TC,
+  'TD': TD,
+  'TF': TF,
+  'TG': TG,
+  'TH': TH,
+  'TJ': TJ,
+  'TK': TK,
+  'TL': TL,
+  'TM': TM,
+  'TN': TN,
+  'TO': TO,
+  'TR': TR,
+  'TT': TT,
+  'TV': TV,
+  'TW': TW,
+  'TZ': TZ,
+  'UA': UA,
+  'UG': UG,
+  'UM': UM,
+  'UN': UN,
+  'US': US,
+  'UY': UY,
+  'UZ': UZ,
+  'VA': VA,
+  'VC': VC,
+  'VE': VE,
+  'VG': VG,
+  'VI': VI,
+  'VN': VN,
+  'VU': VU,
+  'WF': WF,
+  'WS': WS,
+  'XK': XK,
+  'YE': YE,
+  'YT': YT,
+  'ZA': ZA,
+  'ZM': ZM,
+  'ZW': ZW
+};
+
+
+export default function getFlagEmoji(locale) {
   const split = locale.toUpperCase().split(/[-_]/);
-  const lang = split.shift().toLowerCase();
   let code = split.pop();
 
   if (!/^[A-Z]{2}$/.test(code)) {
     try {
-      const region = new Intl.Locale(locale).maximize().region;
-      code = region ? region.toUpperCase() : '';
+      code = new Intl.Locale(locale).maximize().region.toUpperCase();
     } catch (e) {
       code = '';
     }
   }
 
-  if (!code || !flagMap[code]) return '';
-
-  const basePath = new URL('./assets/flags/', import.meta.url).href;
-  return `${basePath}${flagMap[code]}.svg`;
+  return flagMap[code] || '';
 }
-
-// Expose the function
-export default getFlagEmoji;

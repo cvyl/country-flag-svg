@@ -27,9 +27,10 @@
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^latest",
-    "@rollup/plugin-node-resolve": "^latest",
-    "rollup": "^latest",
-    "rollup-plugin-terser": "^latest"
+    "@rollup/plugin-commonjs": "latest",
+    "@rollup/plugin-node-resolve": "latest",
+    "@rollup/plugin-url": "^8.0.2",
+    "rollup": "latest",
+    "rollup-plugin-terser": "latest"
   }
 }

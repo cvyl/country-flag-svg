@@ -1,9 +1,9 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
+import url from '@rollup/plugin-url';
 
 export default [
-  // Browser-friendly UMD build
   {
     input: 'src/index.js',
     output: [
@@ -24,8 +24,13 @@ export default [
       }
     ],
     plugins: [
-      resolve(), 
-      commonjs()
+      resolve(),
+      commonjs(),
+      url({
+        include: '**/*.svg',
+        limit: Infinity,
+        emitFiles: false
+      })
     ]
   }
 ];
