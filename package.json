@@ -22,7 +22,7 @@
   ],
   "files": [
     "dist",
-    "src/flags"
+    "assets/flags/"
   ],
   "author": "Your Name",
   "license": "MIT",

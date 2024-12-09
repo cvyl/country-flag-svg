@@ -260,25 +260,23 @@ function getFlagEmoji(locale) {
     'ZW': '1f1ff-1f1fc'
   };
 
-  // Normalize locale
   const split = locale.toUpperCase().split(/[-_]/);
   const lang = split.shift().toLowerCase();
   let code = split.pop();
 
-  // Inline defaults: if no region specified, pick a default country we know exists in flagMap
-  // Adjust these inline defaults as needed
   if (!/^[A-Z]{2}$/.test(code)) {
     try {
       const region = new Intl.Locale(locale).maximize().region;
       code = region ? region.toUpperCase() : '';
     } catch (e) {
-      code = ''; // fallback if Intl.Locale fails
+      code = '';
     }
   }
 
-  // If we have a code, ensure it's valid in our flagMap
   if (!code || !flagMap[code]) return '';
-  return `./flags/${flagMap[code]}.svg`;
+
+  const basePath = new URL('./assets/flags/', import.meta.url).href;
+  return `${basePath}${flagMap[code]}.svg`;
 }
 
 // Expose the function
