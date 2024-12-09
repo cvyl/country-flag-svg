@@ -1,6 +1,6 @@
 {
   "name": "country-flag-svg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight country flag SVG loader",
   "main": "dist/country-flag-svg.umd.js",
   "module": "dist/country-flag-svg.esm.js",
@@ -8,6 +8,10 @@
     "build": "rollup -c",
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cvyl/country-flag-svg.git"
   },
   "keywords": [
     "flag",
