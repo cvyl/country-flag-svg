@@ -278,7 +278,7 @@ function getFlagEmoji(locale) {
 
   // If we have a code, ensure it's valid in our flagMap
   if (!code || !flagMap[code]) return '';
-  return `/dist/flags/${flagMap[code]}.svg`;
+  return `./flags/${flagMap[code]}.svg`;
 }
 
 // Expose the function
