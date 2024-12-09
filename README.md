@@ -30,6 +30,10 @@ If no country code is provided, the loader attempts to use a default based on th
 
 Simply integrate the returned SVG path into your UI components, such as `<img>` tags, CSS backgrounds, or any SVG-friendly rendering approach.
 
+## Attribution
+
+All icon graphics are provided by and copyright © Twemoji. Use of these icons should comply with the Twemoji licensing terms.
+
 ## Contributing
 
 Contributions to expand locale support or improve mappings are welcome. Adjust the `flagMap` within the source for additional countries or tweak default logic to fit different requirements.
