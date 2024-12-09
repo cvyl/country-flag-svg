@@ -2,3 +2,4 @@ rollup.conig.js
 .gitignore
 node_modules
 example
+src
