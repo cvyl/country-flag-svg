@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flag SVG Example</title>
+    <style>
+        .flag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .flag-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Flag Display</h1>
+    <div id="flag-container" class="flag-container"></div>
+
+    <script type="module">
+    import getFlagEmoji from '../dist/country-flag-svg.esm.js';
+
+    // Array of locales to test
+    const locales = ['en', 'fr', 'en-GB', 'DE', 'ja', 'zh-', 'br', 'au'];
+
+    // Function to create flag display
+    function displayFlags() {
+        const container = document.getElementById('flag-container');
+        
+        locales.forEach(locale => {
+            // Create a container for each flag
+            const flagItem = document.createElement('div');
+            flagItem.className = 'flag-item';
+
+            // Create image element
+            const flagImg = document.createElement('img');
+            flagImg.src = getFlagEmoji(locale);
+            flagImg.alt = `Flag for ${locale}`;
+
+            // Create label
+            const flagLabel = document.createElement('span');
+            flagLabel.textContent = locale;
+
+            // Append to flag item
+            flagItem.appendChild(flagImg);
+            flagItem.appendChild(flagLabel);
+
+            // Append to container
+            container.appendChild(flagItem);
+        });
+    }
+
+    // Call the display function
+    displayFlags();
+    </script>
+</body>
+</html>
