@@ -21,7 +21,7 @@ import getFlagEmoji from 'country-flag-svg';
 
 const locale = 'en-US'; 
 const flagPath = getFlagEmoji(locale);
-console.log(flagPath); // Outputs a path to the corresponding SVG, for example: "/dist/flags/1f1fa-1f1f8.svg"
+console.log(flagPath); // Outputs the SVG file
 ```
 
 If no country code is provided, the loader attempts to use a default based on the language. If no default is defined or the locale is not supported, it returns an empty string.
@@ -29,6 +29,10 @@ If no country code is provided, the loader attempts to use a default based on th
 ## Integration
 
 Simply integrate the returned SVG path into your UI components, such as `<img>` tags, CSS backgrounds, or any SVG-friendly rendering approach.
+
+## Motivation
+
+This simple package was made to fix a specific issue of Windows systems not displaying flags due to geopolitics.
 
 ## Attribution
 
