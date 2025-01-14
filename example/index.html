@@ -17,8 +17,9 @@
             margin: 10px;
         }
         img {
-            max-width: 100px;
-            max-height: 100px;
+            width: 100px;
+            height: 75px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -27,28 +28,37 @@
     <div id="flag-container" class="flag-container"></div>
 
     <script type="module">
-    import getFlagEmoji from '../dist/country-flag-svg.esm.js';
+    import getFlagEmoji from '../dist/index.js';
 
-    // Array of locales to test
-    const locales = ['en', 'fr', 'en-GB', 'en', 'jp', 'tw', 'br', 'au'];
+    // Array of country codes to test
+    const countries = ['US', 'FR', 'GB', 'JP', 'TW', 'BR', 'AU', 'DE'];
 
     // Function to create flag display
-    function displayFlags() {
+    async function displayFlags() {
         const container = document.getElementById('flag-container');
         
-        locales.forEach(locale => {
+        for (const country of countries) {
             // Create a container for each flag
             const flagItem = document.createElement('div');
             flagItem.className = 'flag-item';
 
-            // Create image element
+            // Create image element and set it to a data URL
             const flagImg = document.createElement('img');
-            flagImg.src = getFlagEmoji(locale);
-            flagImg.alt = `Flag for ${locale}`;
+            try {
+                const svg = await getFlagEmoji(country);
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                flagImg.src = url;
+                flagImg.onload = () => URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error(`Error loading flag for ${country}:`, error);
+                flagImg.src = ''; // Set empty src on error
+            }
+            flagImg.alt = `Flag for ${country}`;
 
             // Create label
             const flagLabel = document.createElement('span');
-            flagLabel.textContent = locale;
+            flagLabel.textContent = country;
 
             // Append to flag item
             flagItem.appendChild(flagImg);
@@ -56,7 +66,7 @@
 
             // Append to container
             container.appendChild(flagItem);
-        });
+        }
     }
 
     // Call the display function

@@ -1,36 +1,39 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
-import url from '@rollup/plugin-url';
+import terser from '@rollup/plugin-terser';
+import { string } from 'rollup-plugin-string';
+import glob from 'glob';
+import path from 'path';
 
-export default [
-  {
-    input: 'src/index.js',
-    output: [
-      {
-        name: 'countryFlagSvg',
-        file: 'dist/country-flag-svg.umd.js',
-        format: 'umd'
-      },
-      {
-        file: 'dist/country-flag-svg.esm.js',
-        format: 'es'
-      },
-      {
-        file: 'dist/country-flag-svg.min.js',
-        format: 'umd',
-        name: 'countryFlagSvg',
-        plugins: [terser()]
-      }
-    ],
+// Get all SVG files and create separate configs for each
+const flagConfigs = glob.sync('src/flags/**/*.svg').map(file => {
+  const name = path.basename(file, '.svg');
+  return {
+    input: file,
+    output: {
+      file: `dist/${name}.js`,
+      format: 'es'
+    },
     plugins: [
-      resolve(),
-      commonjs(),
-      url({
-        include: '**/*.svg',
-        limit: Infinity,
-        emitFiles: false
-      })
+      string({
+        include: '**/*.svg'
+      }),
+      terser()
     ]
-  }
-];
+  };
+});
+
+export default {
+  input: 'src/index.js',
+  output: {
+    dir: 'dist',
+    format: 'es'
+  },
+  plugins: [
+    resolve(),
+    commonjs(),
+    string({
+      include: '**/*.svg'
+    })
+  ]
+};

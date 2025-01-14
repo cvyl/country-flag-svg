@@ -1,6 +1,6 @@
 {
   "name": "country-flag-svg",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Lightweight country flag SVG loader",
   "main": "dist/country-flag-svg.umd.js",
   "module": "dist/country-flag-svg.esm.js",
@@ -30,6 +30,10 @@
     "@rollup/plugin-node-resolve": "latest",
     "@rollup/plugin-url": "^8.0.2",
     "rollup": "latest",
-    "rollup-plugin-terser": "latest"
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-string": "^3.0.0"
+  },
+  "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4"
   }
 }
