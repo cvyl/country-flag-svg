@@ -30,46 +30,28 @@
     <script type="module">
     import getFlagEmoji from '../dist/index.js';
 
-    // Array of country codes to test
     const countries = ['US', 'FR', 'GB', 'JP', 'TW', 'BR', 'AU', 'DE'];
 
-    // Function to create flag display
     async function displayFlags() {
         const container = document.getElementById('flag-container');
-        
         for (const country of countries) {
-            // Create a container for each flag
             const flagItem = document.createElement('div');
             flagItem.className = 'flag-item';
-
-            // Create image element and set it to a data URL
             const flagImg = document.createElement('img');
             try {
-                const svg = await getFlagEmoji(country);
-                const blob = new Blob([svg], { type: 'image/svg+xml' });
-                const url = URL.createObjectURL(blob);
-                flagImg.src = url;
-                flagImg.onload = () => URL.revokeObjectURL(url);
+                flagImg.src = await getFlagEmoji(country);
             } catch (error) {
                 console.error(`Error loading flag for ${country}:`, error);
-                flagImg.src = ''; // Set empty src on error
+                flagImg.src = '';
             }
             flagImg.alt = `Flag for ${country}`;
-
-            // Create label
             const flagLabel = document.createElement('span');
             flagLabel.textContent = country;
-
-            // Append to flag item
             flagItem.appendChild(flagImg);
             flagItem.appendChild(flagLabel);
-
-            // Append to container
             container.appendChild(flagItem);
         }
     }
-
-    // Call the display function
     displayFlags();
     </script>
 </body>

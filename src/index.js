@@ -301,7 +301,7 @@ export default async function getFlagEmoji(locale) {
 
   if (flagMap[code]) {
       const flagModule = await flagMap[code]();
-      return flagModule.default;
+      return 'data:image/svg+xml;base64,' + flagModule.default;
   }
 
   return '';

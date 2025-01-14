@@ -1,12 +1,13 @@
 # country-flag-svg
 
-Lightweight loader for country flag SVG files. Designed for compatibility and simplicity, it helps map locale inputs directly to their corresponding country flag SVG.
+Lightweight loader for country flag SVG files. Designed for compatibility and simplicity, it helps map country codes directly to their corresponding flag SVG.
 
 ## Features
 
-- Efficient, direct mapping of country codes to SVG flags.
-- Support for a wide range of locales.
-- Straightforward integration into existing projects.
+- Direct mapping of country codes to SVG flags
+- Support for commonly used country codes
+- Browser and Node.js compatible
+- No emoji dependencies (works on all platforms)
 
 ## Installation
 
@@ -19,28 +20,53 @@ npm install country-flag-svg
 ```javascript
 import getFlagEmoji from 'country-flag-svg';
 
-const locale = 'en-US'; 
-const flagPath = getFlagEmoji(locale);
-console.log(flagPath); // Outputs the SVG file
+// Using country codes
+const flagPath = await getFlagEmoji('US');
+console.log(flagPath); // Returns SVG path for US flag
+
+// HTML Example
+const img = document.createElement('img');
+img.src = await getFlagEmoji('FR');
+img.alt = 'France Flag';
 ```
 
-If no country code is provided, the loader attempts to use a default based on the language. If no default is defined or the locale is not supported, it returns an empty string.
+## Display Example
 
-## Integration
+You can easily integrate flags into your UI:
 
-Simply integrate the returned SVG path into your UI components, such as `<img>` tags, CSS backgrounds, or any SVG-friendly rendering approach.
+```html
+<div class="flag-container">
+    <img src="path-to-flag.svg" alt="Country Flag" width="100" />
+</div>
+```
+
+## Styling
+
+Recommended CSS for flag display:
+
+```css
+.flag-container img {
+    width: 100px;
+    height: 75px;
+    object-fit: contain;
+}
+```
+
+## Supported Countries
+
+Includes support for most common country codes (US, FR, GB, JP, etc.). Returns empty string for unsupported codes.
 
 ## Motivation
 
-This simple package was made to fix a specific issue of Windows systems not displaying flags due to geopolitics.
+Created to provide consistent flag display across all platforms, especially Windows systems where emoji flags might not render properly.
 
 ## Attribution
 
-All icon graphics are provided by and copyright © Twemoji. Use of these icons should comply with the Twemoji licensing terms.
+Flag graphics provided by and copyright © Twemoji. Usage must comply with Twemoji licensing terms.
 
 ## Contributing
 
-Contributions to expand locale support or improve mappings are welcome. Adjust the `flagMap` within the source for additional countries or tweak default logic to fit different requirements.
+Contributions welcome! Feel free to add country codes or improve existing implementations.
 
 ## License
 
